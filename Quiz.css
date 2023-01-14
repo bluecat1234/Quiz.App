@@ -1,0 +1,24 @@
+.container{
+    margin-top: 20%;
+}
+
+.alert{
+    text-align: center;
+}
+
+#js-reset{
+    display: none;
+}
+
+#js-reset:hover{
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(114, 114, 114);
+    transform: translateY(-0.15rem) rotate(360deg);
+    transition: transform 0.8s;
+}
+
+
+button:hover{
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(114, 114, 114);
+    transform: translateY(-0.2rem);
+}
+
