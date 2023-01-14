@@ -15,6 +15,16 @@
 
     <div class="container">
 
+        <div class="d-flex justify-content-evenly">
+            <button id="js-start" type="button" class="btn btn-outline-primary">
+                スタート！
+            </button>
+        </div> 
+        
+
+         <div id="js-attention">※1問につき<a class="num">15秒</a>の時間制限があるよ！</div>
+
+
         <h4 id="js-time"></h4>
 
         <div id="js-question" class="alert alert-primary mt-5" role="alert">
@@ -34,6 +44,15 @@
             </button>
         </div>
     </div>
+
+    <audio id="js-start-sound" src="./start.mp3"></audio>
+    <audio id="js-correct-sound" src="./correct.mp3"></audio>
+    <audio id="js-wrong-sound" src="./wrong.mp3"></audio>
+    <audio id="js-reset-sound" src="./reset.mp3"></audio>
+    <audio id="js-sad-sound" src="./sad.mp3"></audio>
+    <audio id="js-allEnd-sound" src="./allEnd.mp3"></audio>
+
+
 
     <script src="./Quiz.js"></script>
 
