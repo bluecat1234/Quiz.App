@@ -21,11 +21,18 @@ const Quiz = [{
 }];
 
 
-
+const $start = document.getElementById("js-start");
+const $attention  = document.getElementById("js-attention");
 const $question = document.getElementById("js-question");
 const $button = document.getElementsByClassName("js-button");
 const $reset = document.getElementById("js-reset");
 const $time = document.getElementById("js-time");
+const $startSound = document.getElementById("js-start-sound");
+const $correctSound = document.getElementById("js-correct-sound");
+const $wrongSound = document.getElementById("js-wrong-sound");
+const $sadSound = document.getElementById("js-sad-sound");
+const $allEndSound = document.getElementById("js-allEnd-sound");
+const $resetSound = document.getElementById("js-reset-sound");
 const buttonLength = $button.length;
 let QuizIndex = 0;
 const QuizLength = Quiz.length;
@@ -33,35 +40,29 @@ let score = 0;
 let timeLeft = 15000;
 
 
-
-const LastField = () =>{
-    window.alert("終了！お疲れ様でした(^^♪");
-    $question.textContent = "あなたの正解率は【" + Math.round(score/QuizLength*100) + "％】でした（" + QuizLength + "問中" + score + "問正解）";
-    clearInterval(countDown);
-    $time.textContent = "残り時間 : 0秒";
-    let btnIndex = 0;
-    while(btnIndex < buttonLength){
-        $button[btnIndex].style.display = "none";
-        btnIndex++;
-    };
-    $reset.style.display = "block";
-    $reset.addEventListener("click" , () => {
-        location.reload();
-    });
+$time.style.display = "none";
+$question.style.display = "none";
+let BtnIndex = 0;
+while(BtnIndex < buttonLength){
+    $button[BtnIndex].style.display = "none";
+    BtnIndex++;
 };
 
 
 
-const timeUp = () => {
-    window.alert("時間切れです。不正解...");
-    QuizIndex++;
-    if(QuizIndex === QuizLength){
-        LastField();
-    } else {
-        QuizSetUp();
+$start.addEventListener("click" , () =>{
+    $startSound.play();
+    $start.style.display = "none";
+    $attention.style.display = "none";
+    $question.style.display = "block";
+    let BtnIndex = 0;
+    while(BtnIndex < buttonLength){
+        $button[BtnIndex].style.display = "block";
+        BtnIndex++;
     };
-};
-
+    $time.style.display = "block";
+    QuizSetUp();
+});
 
 
 let countDown = 0;
@@ -86,17 +87,49 @@ const QuizSetUp = () => {
 };
 
 
+const LastField = () =>{
+    $allEndSound.play();
+    window.alert("終了！お疲れ様でした(^^♪");
+    $question.textContent = "あなたの正解率は【" + Math.round(score/QuizLength*100) + "％】でした（" + QuizLength + "問中" + score + "問正解）";
+    if(Math.round(score/QuizLength*100) <= 30){
+        $sadSound.play();
+    };
+    clearInterval(countDown);
+    $time.textContent = "残り時間 : 0秒";
+    let btnIndex = 0;
+    while(btnIndex < buttonLength){
+        $button[btnIndex].style.display = "none";
+        btnIndex++;
+    };
+    $reset.style.display = "block";
+    $reset.addEventListener("click" , () => {
+        location.reload();
+    });
+};
 
-QuizSetUp();
+
+
+const timeUp = () => {
+    $wrongSound.play();
+    window.alert("時間切れです。不正解...");
+    QuizIndex++;
+    if(QuizIndex < QuizLength){
+        QuizSetUp();
+    } else {
+        LastField();
+    };
+};
 
 
 
 const ClickReactor = (e) => {
     clearInterval(countDown);
     if(e.target.textContent === Quiz[QuizIndex].correct){
+        $correctSound.play();
         window.alert("正解☆");
         score++;
     } else {
+        $wrongSound.play();
         window.alert("不正解...");
     };
 
